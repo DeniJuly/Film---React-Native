@@ -16,17 +16,18 @@ const Tab = createMaterialTopTabNavigator()
 const Stack = createStackNavigator()
 export default function App() {
   const MyTab = () => <Tab.Navigator 
-    swipeEnabled={true} 
+    swipeEnabled={false}
     tabBarOptions={{
       activeTintColor: '#f19292',
+      style:{
+        elevation: 0
+      },
       labelStyle: {
-        fontFamily: 'Poppins-Medium'
+        fontFamily: 'Poppins-Medium',
+        fontSize: 12
       },
       indicatorStyle: {
         backgroundColor: '#f19292'
-      },
-      style: {
-        elevation: 0
       }
     }}>
     <Tab.Screen 
