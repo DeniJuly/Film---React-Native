@@ -1,22 +1,30 @@
-import React from 'react'
-import { StyleSheet, Text, View, Image } from 'react-native';
+import React, { useEffect } from 'react'
+import { StyleSheet, Text, View, Image, TouchableOpacity } from 'react-native';
 import Star from '../assets/icon/star-10.svg';
 
-export default function FilmVertical({item}){
+export default function FilmVertical({item, navigation}){
     return (
-        <View style={styles.container}>
-            <Image 
-                source={{
-                    uri: 'https://image.tmdb.org/t/p/w300_and_h450_bestv2'+item.poster_path
-                }}
-                style={styles.poster}
-            />
-            <Text style={styles.title}>{item.original_title}</Text>
-            <View style={styles.rating}>
-                <Star />
-                <Text style={styles.ratingText}>{item.vote_average}</Text>
+        <TouchableOpacity onPress={() => {
+            if (navigation.dangerouslyGetParent() != undefined) {
+                navigation.dangerouslyGetParent().push('Detail',{ film: item})
+            } else {
+                navigation.push('Detail',{ film: item})
+            }
+        }}>
+            <View style={styles.container}>
+                <Image 
+                    source={{
+                        uri: 'https://image.tmdb.org/t/p/w300_and_h450_bestv2'+item.poster_path
+                    }}
+                    style={styles.poster}
+                />
+                <Text style={styles.title}>{item.original_title}</Text>
+                <View style={styles.rating}>
+                    <Star />
+                    <Text style={styles.ratingText}>{item.vote_average}</Text>
+                </View>
             </View>
-        </View>
+        </TouchableOpacity>
     )
 }
 

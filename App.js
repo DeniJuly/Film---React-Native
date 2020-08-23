@@ -11,16 +11,20 @@ import Terpopuler from './pages/terpopuler';
 
 // components
 import Header from './components/header'
+import Detail from './pages/detail';
 
 const Tab = createMaterialTopTabNavigator()
 const Stack = createStackNavigator()
 export default function App() {
+
   const MyTab = () => <Tab.Navigator 
     swipeEnabled={false}
     tabBarOptions={{
       activeTintColor: '#f19292',
       style:{
-        elevation: 0
+        elevation: 0,
+        borderBottomWidth: 1,
+        borderBottomColor: '#ddd'
       },
       labelStyle: {
         fontFamily: 'Poppins-Medium',
@@ -29,7 +33,7 @@ export default function App() {
       indicatorStyle: {
         backgroundColor: '#f19292'
       }
-    }}>
+  }}>
     <Tab.Screen 
       name="Home" 
       component={untukKamu}
@@ -60,6 +64,13 @@ export default function App() {
               height: 45,
             }
           }}/>
+          <Stack.Screen 
+            name="Detail" 
+            component={Detail} 
+            options={{
+              headerShown: false
+            }}
+          />
       </Stack.Navigator>
     </NavigationContainer>
   );

@@ -1,8 +1,18 @@
 import React from 'react';
 import { StyleSheet, Text, View, ImageBackground, Image } from 'react-native';
 import Star from '../assets/icon/star-10.svg';
+import { TouchableOpacity } from 'react-native-gesture-handler';
 
-export default function AkanTayang({item}){
+export default function AkanTayang({item, navigation, genre}){
+    const getGenre = (genre_id) => {
+        for (let i = 0; i < genre.length; i++) {
+            if(genre[i].id == genre_id){
+                return (
+                    <Text style={styles.genre} key={genre_id}>{genre[i].name}</Text>
+                )
+            }
+        }
+    }
     return(
         <ImageBackground
                 source={{
@@ -10,33 +20,29 @@ export default function AkanTayang({item}){
                 }}
                 style={styles.background}
             >
-                <View
-                    style={styles.content}
-                >
+                <View style={styles.content}>
                     <Image 
                         source={{
                             uri: 'https://image.tmdb.org/t/p/w300_and_h450_bestv2'+item.poster_path
                         }}
                         style={styles.poster}
                     />
-                    <View
-                        style={styles.detail}
-                    >
-                        <Text
-                            style={styles.title}
-                        >{item.original_title}</Text>
-                        <Text
-                            style={styles.genre}
-                        >Animation, Adventure, Comedy</Text>
-                        <View
-                            style={styles.rating}
-                        >
-                            <Star />
-                            <Text
-                                style={styles.ratingText}
-                            >{item.vote_average}</Text>
+                    <TouchableOpacity onPress={() => navigation.dangerouslyGetParent().push('Detail',{ film: item})}>
+                        <View style={styles.detail}>
+                            <Text style={styles.title}>{item.original_title}</Text>
+                            <View style={{flexDirection: 'row'}}>
+                            {
+                                item.genre_ids.map(res => (
+                                    getGenre(res)
+                                ))
+                            }  
+                            </View>
+                            <View style={styles.rating}>
+                                <Star />
+                                <Text style={styles.ratingText}>{item.vote_average}</Text>
+                            </View>
                         </View>
-                    </View>
+                    </TouchableOpacity>
                 </View>
             </ImageBackground>
     )
@@ -76,7 +82,8 @@ const styles = StyleSheet.create({
     genre: {
         fontFamily: 'Poppins-Light',
         fontSize: 11,
-        color: 'white'
+        color: 'white',
+        marginRight: 5
     },
     rating: {
         flexDirection: 'row',
